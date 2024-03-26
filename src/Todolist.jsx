@@ -3,6 +3,7 @@ import { Submitbutton } from "./Submitbutton"
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+
 export const Todolist =(props) => {
     // todoList = [{text:"inputされた文字列",isCoomplete:false（コンプリートの状態をtureかfalseで判定）}]
 
@@ -23,18 +24,19 @@ export const Todolist =(props) => {
                             }
                         </span>
                         <Submitbutton 
+                            buttonText="Complete"
+                            onClickButton={() => onComplete(index)} 
+                            buttonColor="success"
+                            icon={todo.switchIcon || <TaskAltIcon/> }
+                    />
+                        <Submitbutton 
                             buttonText="Delete"
                             onClickButton={() => onDelete(index)} 
                             buttonColor="error"
                             icon={<DeleteIcon/>}
                             
                         />
-                        <Submitbutton 
-                            buttonText="Complete"
-                            onClickButton={() => onComplete(index)} 
-                            buttonColor="success"
-                            icon={<TaskAltIcon/>}
-                    />
+
                     </li>
                 );
             })}

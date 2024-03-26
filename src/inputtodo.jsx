@@ -3,7 +3,10 @@ import { useState } from "react"
 import { Submitbutton } from "./Submitbutton";
 import { Todolist } from "./Todolist";
 import EditIcon from '@mui/icons-material/Edit';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { useInputForm } from "./useInputForm";
+
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 
 export const InputTodo =()=>{
 
@@ -34,11 +37,20 @@ export const InputTodo =()=>{
         setTodoList(newTodoList)
         // console.log(newTodoList)
     }
-    const handleCompleteClick = (completeIndex)=>{
-        const newTodoList =  todoList.map((todo,index)=>{
-            return index===completeIndex?{...todo,isComplete:!todo.isComplete}:todo})
-        setTodoList(newTodoList)
-    }
+    const handleCompleteClick = (completeIndex) => {
+        const newTodoList = todoList.map((todo, index) => {
+            if (index === completeIndex) {
+                return {
+                    ...todo,
+                    isComplete: !todo.isComplete,
+                    switchIcon: !todo.isComplete ?<KeyboardReturnIcon/> : <TaskAltIcon/>
+                };
+            }
+            return todo;
+        });
+        setTodoList(newTodoList);
+    };
+    
     //!で反転させる（
 
              // 空文字または空白文字のみかを判定する関数
