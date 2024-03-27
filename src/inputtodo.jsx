@@ -28,8 +28,23 @@ export const InputTodo =()=>{
         //プロパティ名text、タイトル、ディスクリプション、メモ
         setTodoList(newTodoList)
         setValue("") //初期化
-
     }
+    const handleKeyDown = (e) => {
+        if (isEnterKey(e) && !isIMEActive(e)) {
+            e.preventDefault();
+            if (!isBlank(value)) {
+                onClickAddTodo();
+            }
+        }
+    };
+    
+    const isEnterKey = (e) => {
+        return e.key === 'Enter';
+    };
+    
+    const isIMEActive = (e) => {
+        return e.nativeEvent.isComposing || e.nativeEvent.keyCode === 229;
+    };
 
     const onclickDeleteButton = (todoNum)=> {
         //console.log("テスト２")
@@ -61,11 +76,27 @@ export const InputTodo =()=>{
     return(
     <>
     <h1>TODOを入れてください</h1>
-    <div style={{display:"flex",flexDirection:"row"}}>
-    <input placeholder="ToDoを入力" value= {value} onChange={onChangeValue}/>
-    <Submitbutton icon={<EditIcon/>} buttonText="ToDoを追加" onClickButton={onClickAddTodo} isDisabled={isBlank(value)} />
+    <>
+    <div style={{display:"flex",flexDirection:"row", alignItems: "left", marginBottom: '10px'}}>
     
+        <input placeholder="ToDoを入力" 
+            value= {value} 
+            onChange={onChangeValue}
+            onKeyDown={handleKeyDown}
+            style={{ width: '80%', marginRight: '10px'  }} 
+        />
     </div>
+    <span style={{marginLeft:-20 ,marginTop:'10px'}}>
+        <Submitbutton 
+            icon={<EditIcon/>} 
+            buttonText="ToDoを追加" 
+            onClickButton={onClickAddTodo} 
+            isDisabled={isBlank(value)} 
+            
+        />
+    </span>
+    </>
+
 
     <Todolist onComplete={handleCompleteClick} todoList={todoList} onDelete={onclickDeleteButton} />
     </>
